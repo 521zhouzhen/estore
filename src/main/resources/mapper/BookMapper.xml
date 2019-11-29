@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.app.estore.mapper.BookMapper">
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.briup.app.estore.bean.Book">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+  </resultMap>
+  
+  <resultMap id="BookWithOrderLineResultMap" type="com.briup.app.estore.bean.Book">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <association property="orderline" resultMap="com.briup.app.estore.bean.OrderLine.OrderLineBaseResultMap"></association>
+  </resultMap>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_book
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.briup.app.estore.bean.Book">
+    insert into tbl_book (id, name, price
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.briup.app.estore.bean.Book">
+    update tbl_book
+    set name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, price
+    from tbl_book
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, price
+    from tbl_book
+  </select>
+ 
+</mapper>

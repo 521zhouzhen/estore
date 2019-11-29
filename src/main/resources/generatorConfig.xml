@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="MyBatis3Simple" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!-- 取消所有注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+		
+		<!-- 配置连接数据的相关属性 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false" userId="root" password="root" />
+
+        <!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 对应的实体类 -->
+        <javaModelGenerator targetPackage="com.briup.app.estore.bean" targetProject="src/main/java">
+        </javaModelGenerator>
+
+        <!--对应的XXXMapper.xml文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <!-- 对应的XXXMapper.java文件 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.briup.app.estore.mapper" targetProject="src/main/java">
+        </javaClientGenerator>
+		
+		<!-- 查找数据库中s_开头的表，并生成对应的实体类、映射接口、映射文件 -->
+        <table tableName="tbl_%">
+        	<!-- 生成的文件名字中去掉Tbl开头的前缀 -->
+        	<domainObjectRenamingRule searchString="^Tbl" replaceString=""/>
+        </table>
+        <!--<table domainObjectName="User" tableName="t_user"></table>-->
+    </context>
+</generatorConfiguration>

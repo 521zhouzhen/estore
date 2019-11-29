@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.app.estore.mapper.OrderlineMapper">
+
+
+
+<!-- <resultMap id="BookBaseResultMap" type="com.briup.app.estore.bean.Book">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+  </resultMap> -->
+  
+
+
+<!-- <resultMap id="OrderBaseResultMap" type="com.briup.app.estore.bean.Order">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cost" jdbcType="DOUBLE" property="cost" />
+    <result column="orderDate" jdbcType="DATE" property="orderdate" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+  </resultMap>
+  
+  
+  
+  <resultMap id="BaseResultMap" type="com.briup.app.estore.bean.Orderline">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="bookid" jdbcType="INTEGER" property="bookid" />
+		</resultMap> 
+  
+  <resultMap id="OrderLineWithBookResultMap" type="com.briup.app.estore.bean.Orderline">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+		  <association property="book" resultMap="BookBaseResultMap" /> 
+		</resultMap> 
+   -->
+   
+   
+   
+   <resultMap id="BookResultMap" type="com.briup.app.estore.bean.Book">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+  </resultMap>
+	
+	<resultMap id="OrderResultMap" type="com.briup.app.estore.bean.Order">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cost" jdbcType="DOUBLE" property="cost" />
+    <result column="orderDate" jdbcType="DATE" property="orderdate" />
+ <association property="customer" resultMap="CustomerResultMap"></association>
+  </resultMap>
+  
+  
+	 <resultMap id="OrderlineResultMap" type="com.briup.app.estore.bean.Orderline">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <association property="book" resultMap="BookResultMap"></association>
+    <association property="order" resultMap="OrderResultMap"></association>
+		</resultMap> 
+	
+  
+  
+  
+  <select id="selectOrderWithOrderlineAndBook"  parameterType="Integer" resultMap="OrderlineResultMap">
+  	select 
+                l.id,l.num,
+				o.id, o.cost,o.orderDate,o.customer_id, 
+				
+				b.id,b.name,b.price
+			from 
+				tbl_orderline l
+				left outer join tbl_order o  on o.id  = l.order_id 
+				left outer join tbl_book  b on b.id =l.book_id 
+			where 
+				o.id=#{id} 
+	</select> 
+  
+  
+   
+   
+   <insert id="insertOrderLine" parameterType="com.briup.app.estore.bean.Orderline" useGeneratedKeys="true" keyProperty="id">
+  
+     insert into tbl_orderline(num,order_id, 
+      book_id)
+    values (#{num,jdbcType=INTEGER}, #{order.id,jdbcType=INTEGER}, 
+      #{book.id,jdbcType=INTEGER})
+  </insert>
+  
+  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_orderline
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.briup.app.estore.bean.Orderline">
+    update tbl_orderline
+    set num = #{num,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  
+  <select id="selectByBookId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, num, book_id
+    from tbl_orderline
+    where  book_id = #{bookId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, num, order_id, book_id
+    from tbl_orderline
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, num, order_id, book_id
+    from tbl_orderline
+  </select> -->
+ 
+ 
+ 
+</mapper>

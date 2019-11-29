@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.app.estore.mapper.CustomerMapper">
+	<resultMap id="BaseResultMap"
+		type="com.briup.app.estore.bean.Customer">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="password" jdbcType="VARCHAR"
+			property="password" />
+		<result column="zip" jdbcType="VARCHAR" property="zip" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="telephone" jdbcType="VARCHAR"
+			property="telephone" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from tbl_customer
+		where id =
+		#{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert"
+		parameterType="com.briup.app.estore.bean.Customer">
+		insert into tbl_customer (id,name, password,
+		zip,address, telephone,
+		email)
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{zip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select id, name, password,
+		zip, address, telephone, email
+		from tbl_customer
+		where id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- <update id="updateByPrimaryKey"
+		parameterType="com.briup.app.estore.bean.Book">
+		update tbl_book
+		set name = #{name,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DOUBLE}
+		where id = #{id,jdbcType=INTEGER}
+	</update> -->
+
+	<update id="updateByPrimaryKey"
+		parameterType="com.briup.app.estore.bean.Customer">
+		update tbl_customer
+		set name=#{name,jdbcType=VARCHAR},
+		password=#{password,jdbcType=VARCHAR},
+		zip=#{zip,jdbcType=VARCHAR},
+		address=#{address,jdbcType=VARCHAR},
+		telephone=#{telephone,jdbcType=VARCHAR},
+		email=#{email,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+
+	</update>
+
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, name, password, zip,
+		address, telephone, email
+		from tbl_customer
+	</select>
+
+
+
+
+	<select id="selectByName" resultMap="BaseResultMap">
+		select id, name,
+		password,zip, address, telephone, email
+		from tbl_customer
+		where id =
+		#{name}
+	</select>
+</mapper>

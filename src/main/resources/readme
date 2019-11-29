@@ -1,0 +1,22 @@
+1.注意修改配置文件中，连接数据的相关属性
+	涉及到的文件有：
+	mysql.properties和oracle.properties和generatorConfig.xml
+
+2.注意观察pom文件中tomcat插件的相关配置，如果需要可以修改
+
+3.执行maven的tomcat插件的目标：tomcat7:run 即可启动内嵌的tomcat运行该项目
+
+4.如果有需要，也可以将项目部署到外部的tomcat服务器中，操作方式和之前一样
+
+5.执行maven的mybatis插件的目标：mybatis-generator:generate 即可运行generator插件，并自动生成表对应的实体类、映射文件、映射接口
+	注意观察generatorConfig.xml文件中的配置，其中有配置生成的文件所放的位置
+
+6.注意jdbc的驱动包，如果有需要，可以手动安装
+	执行mvn命令的路径和jar包所在位置，保持一致：
+	mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=8 -Dpackaging=jar -Dfile=ojdbc8.jar -DgeneratePom=true
+
+7.实体类自动生成之后，需要自己手动添加关联关系，如果订单和用户之间的关系等
+	自动生成的类中，只是保存了一个外键列的名字（Integer类型），需要修改为对应的关联对象的类型（例如改为Book）
+
+8.类之间的关联关系修改好了之后，可以添加购物车类 ShoppingCart	
+	
